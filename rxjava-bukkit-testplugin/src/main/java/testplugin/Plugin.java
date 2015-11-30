@@ -3,10 +3,9 @@ package testplugin;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rx.Observable;
-import rx.bukkit.RxJavaPlugin;
+import rx.bukkit.RxBukkitStub;
 import rx.bukkit.observable.EventObservable;
 import rx.bukkit.observable.CommandEvent;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class Plugin extends JavaPlugin {
     @Override
     public void onLoad() {
-        RxJavaPlugin.initializeRx(this);
+        RxBukkitStub.initializeRx(this);
     }
 
     @Override

@@ -1,22 +1,18 @@
 package rx.bukkit;
 
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import rx.Scheduler;
 import rx.bukkit.scheduler.BukkitRxScheduler;
-import rx.bukkit.task.TaskFactory;
-import rx.plugins.RxJavaDefaultSchedulers;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaSchedulersHook;
 
 import java.util.logging.Level;
 
 /**
  * Copyright 2014 Ryan Michela
  */
-public class RxJavaPlugin extends JavaPlugin {
-    private final TaskFactory taskFactory = new TaskFactory(this);
-
+public class RxBukkitStub {
     public static void initializeRx(final Plugin plugin) {
         // Register global error handler
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
@@ -26,7 +22,7 @@ public class RxJavaPlugin extends JavaPlugin {
             }
         });
         // Register global schedulers
-        RxJavaPlugins.getInstance().registerDefaultSchedulers(new RxJavaDefaultSchedulers() {
+        RxJavaPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
             @Override
             public Scheduler getComputationScheduler() {
                 return BukkitRxScheduler.forPlugin(plugin, BukkitRxScheduler.ConcurrencyMode.SYNCHRONOUS);
@@ -42,15 +38,5 @@ public class RxJavaPlugin extends JavaPlugin {
                 return BukkitRxScheduler.forPlugin(plugin, BukkitRxScheduler.ConcurrencyMode.ASYNCHRONOUS);
             }
         });
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        initializeRx(this);
-    }
-
-    public TaskFactory getTaskFactory() {
-        return taskFactory;
     }
 }
